@@ -1,70 +1,93 @@
+<!-- input.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smartventure</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="icon" type="image/png" href="../img/logo.png">
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
-    .fullscreen-wrapper {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
+    html, body { margin: 0; padding: 0; height: 100%; }
+    .fullscreen-wrapper { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
     .fullscreen-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .custom-button {
+    .overlay {
       position: absolute;
-      top: 770px; 
-      left: 750px; 
-      z-index: 10;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 9;
     }
 
-    .custom-button button {
-      width: 220px;           
-      height: 70px;           
+    .popup {
+      position: absolute;
+      top: 200px;
+      left: 700px;
+      width: 400px;
       background-color: white;
-      color: #007bff;
-      font-size: 24px;   
-      border: none;
-      border-radius: 30px;   
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      transition: 0.3s;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 20;
     }
 
-    .custom-button button:hover {
-      background-color: #0056b3;
-      color: white;
-      transform: scale(1.05);
+    #outputNama1, #outputNama2 {
+      position: absolute;
+      font-weight: bold;
+      color: #0056b3;
+      z-index: 15;
+      display: none;
     }
+
+    #outputNama1 { top: 150px; left: 1300px; font-size: 70px; }
+    #outputNama2 { top: 270px; left: 1300px; font-size: 70px; }
   </style>
 </head>
 <body>
   <div class="fullscreen-wrapper">
+    <div class="overlay" id="overlay"></div>
 
-    <div class="custom-button">
-      <button onclick="window.location.href='aturan1.html'"
-      >Mulai</button>
+    <div class="popup" id="popup">
+        <h4>Masukan nama pemain</h4>
+      <label>Nama Pemain 1:</label>
+      <input type="text" id="nama1" class="form-control mb-2" />
+      <label>Nama Pemain 2:</label>
+      <input type="text" id="nama2" class="form-control mb-3" />
+      <button class="btn btn-primary w-100" onclick="simpan()">Simpan</button>
     </div>
 
-    <img src="../img/1.png" alt="Gambar" />
+    <div id="outputNama1"></div>
+    <div id="outputNama2"></div>
+
+    <img src="../img/0.png" alt="Background" />
   </div>
+
+  <script>
+    function simpan() {
+      const nama1 = document.getElementById('nama1').value;
+      const nama2 = document.getElementById('nama2').value;
+
+      // Simpan ke localStorage
+      localStorage.setItem('nama1', nama1);
+      localStorage.setItem('nama2', nama2);
+
+      // Tampilkan
+      document.getElementById('outputNama1').textContent = nama1;
+      document.getElementById('outputNama2').textContent = nama2;
+      document.getElementById('outputNama1').style.display = 'block';
+      document.getElementById('outputNama2').style.display = 'block';
+
+      // Sembunyikan popup dan overlay
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+      window.location.href = 'dadu.html';
+
+    }
+  </script>
 </body>
 </html>
