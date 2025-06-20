@@ -81,7 +81,11 @@
     <button onclick="rollDice(6)">6</button>
 </div>
 
+<div id="positionInfo" style="position: absolute; top: 850px; left: 200px; color: white; font-size: 20px; z-index: 10;"></div>
+
+
 <script>
+
     const nama1 = localStorage.getItem('nama1') || '';
     const nama2 = localStorage.getItem('nama2') || '';
     document.getElementById('outputNama1').textContent = nama1;
@@ -122,6 +126,7 @@
     }
 
     function showSelesai() {
+
         overlay.innerHTML = `<div class="card"><h2>Selamat<br>${nama1} (nilai 100)  dan ${nama2} (nilai 70) telah menyelesaikan pembelajaran interaktif sub bab hewan pada mata pelajaran IPA <br>Lakukan sesi refleksi untuk membahas jawaban atau pelajaran dari setiap instruksi AR yang telah dilakukan selama permainan.</h2><img src="../img/good.png"/><div class="showcase-button"><button onclick="location.href='home.html'">Selesai</button></div></div>`;
         overlay.style.display = 'flex';
     }
@@ -140,13 +145,81 @@
     }
 
     function moveToken(token, pos) {
-        const x = (pos - 1) % 4;
-        const y = Math.floor((pos - 1) / 4);
-        const left = 250 + x * 170;
-        const top = 670 - y * 190;
-        token.style.left = `${left}px`;
-        token.style.top = `${top}px`;
-    }
+    const x = (pos - 1) % 4;
+    const y = Math.floor((pos - 1) / 4);
+    const left = 250 + x * 170;
+    const top = 670 - y * 190;
+    token.style.left = `${left}px`;
+    token.style.top = `${top}px`;
+
+    // Tambahkan pengecekan titik khusus dan jeda 1 detik
+    setTimeout(() => {
+        const currentLeft = parseInt(token.style.left);
+        const currentTop = parseInt(token.style.top);
+
+        // Daftar titik khusus dan tujuannya
+        if (currentLeft === 420 && currentTop === 670) {
+            // dari 420,670 ke 590,480
+            token.style.left = '590px';
+            token.style.top = '480px';
+            posObj.pos = 7;
+        } else if (currentLeft === 760 && currentTop === 290) {
+            // dari 760,290 ke 420,290
+            token.style.left = '420px';
+            token.style.top = '290px';
+            posObj.pos = 9;
+        } else if (currentLeft === 590 && currentTop === 480) {
+            // dari 590,480 ke 590,100
+            token.style.left = '590px';
+            token.style.top = '100px';
+            posObj.pos = 9;
+        } else if (currentLeft === 250 && currentTop === 100) {
+            // dari 250,100 ke 760,100
+            token.style.left = '760px';
+            token.style.top = '100px';
+            posObj.pos = 15;
+        }
+    }, 1000);
+}
+
+// function moveToken(token, posObj) {
+//     // posObj adalah objek: { pos: number }, supaya bisa diubah nilainya dari dalam fungsi
+//     const x = (posObj.pos - 1) % 4;
+//     const y = Math.floor((posObj.pos - 1) / 4);
+//     const left = 250 + x * 170;
+//     const top = 670 - y * 190;
+//     token.style.left = `${left}px`;
+//     token.style.top = `${top}px`;
+
+//     setTimeout(() => {
+//         const currentLeft = parseInt(token.style.left);
+//         const currentTop = parseInt(token.style.top);
+
+//         if (currentLeft === 420 && currentTop === 670) {
+//             // dari 420,670 ke 590,480 (pos 3 -> 7)
+//             token.style.left = '590px';
+//             token.style.top = '480px';
+//             posObj.pos = 7;
+//         } else if (currentLeft === 760 && currentTop === 290) {
+//             // dari 760,290 ke 420,290 (pos 12 -> 10)
+//             token.style.left = '420px';
+//             token.style.top = '290px';
+//             posObj.pos = 9;
+//         } else if (currentLeft === 590 && currentTop === 480) {
+//             // dari 590,480 ke 590,100 (pos 7 -> 14)
+//             token.style.left = '590px';
+//             token.style.top = '100px';
+//             posObj.pos = 9;
+//         } else if (currentLeft === 250 && currentTop === 100) {
+//             // dari 250,100 ke 760,100 (pos 13 -> 16)
+//             token.style.left = '760px';
+//             token.style.top = '100px';
+//             posObj.pos = 15;
+//         }
+//     }, 1000);
+// }
+
+
 </script>
 </body>
 </html>
